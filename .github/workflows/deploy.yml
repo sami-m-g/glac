@@ -29,4 +29,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v3
 
       - name: Apply Deployment
-        run: gcloud infra-manager deployments apply glac-deployment --local-source=infra
+        run: |
+          gcloud infra-manager deployments apply glac-deployment \
+          --location=us-central1 \
+          --local-source=infra
