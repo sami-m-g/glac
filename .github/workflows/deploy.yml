@@ -34,3 +34,4 @@ jobs:
           --location=us-central1 \
           --local-source=infra \
           --service-account=projects/${{ secrets.GOOGLE_CLOUD_PROJECT }}/serviceAccounts/${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
+          --verbosity=debug
