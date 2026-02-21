@@ -22,7 +22,7 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v3
         with:
-          project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+          service_account: ${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
 
       - name: Setup gcloud
@@ -32,4 +32,4 @@ jobs:
         run: |
           gcloud infra-manager deployments apply glac-deployment \
           --location=us-central1 \
-          --local-source=infra
+          --local-source=infra \
