@@ -3,7 +3,7 @@
 ## Development
 
 ```bash
-brew install gcloud-cli
+brew install gcloud-cli terraform
 
 gcloud auth application-default login
 

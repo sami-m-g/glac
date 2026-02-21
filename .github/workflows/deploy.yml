@@ -13,7 +13,7 @@ jobs:
       id-token: write
 
     env:
-      GCP_PROJECT_ID: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+      TF_VAR_project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
 
     steps:
       - name: Checkout
@@ -37,3 +37,9 @@ jobs:
       - name: Terraform Apply
         working-directory: infra
         run: terraform apply -auto-approve
+
+      - name: Show Cloud Run URL
+        working-directory: infra
+        run: |
+          cloud_run_url=$(terraform output -raw cloud_run_url)
+          echo "Cloud Run URL: ${cloud_run_url}"
