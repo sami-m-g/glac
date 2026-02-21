@@ -8,6 +8,11 @@ resource "google_project_service" "iam_service" {
   service = "iam.googleapis.com"
 }
 
+resource "google_project_service" "compute_service" {
+  project = var.project_id
+  service = "compute.googleapis.com"
+}
+
 resource "google_artifact_registry_repository" "artifact_repo" {
   depends_on = [google_project_service.artifact_registry_service]
 

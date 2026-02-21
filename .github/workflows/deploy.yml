@@ -22,24 +22,11 @@ jobs:
       - name: Authenticate to GCP
         uses: google-github-actions/auth@v3
         with:
+          project_id: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
 
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v3
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Init
-        working-directory: infra
-        run: terraform init
-
-      - name: Terraform Apply
-        working-directory: infra
-        run: terraform apply -auto-approve
-
-      - name: Show Cloud Run URL
-        working-directory: infra
-        run: |
-          cloud_run_url=$(terraform output -raw cloud_run_url)
-          echo "Cloud Run URL: ${cloud_run_url}"
+      - name: Apply Deployment
+        run: gcloud infra-manager deployments apply glac-deployment --local-source=infra
