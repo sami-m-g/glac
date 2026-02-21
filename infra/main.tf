@@ -1,4 +1,11 @@
+resource "google_project_service" "artifact_registry" {
+  project = var.project_id
+  service = "artifactregistry.googleapis.com"
+}
+
 resource "google_artifact_registry_repository" "artifact_repo" {
+  depends_on = [google_project_service.artifact_registry]
+
   location      = var.region
   repository_id = var.artifact_registry_repo
   description   = "Docker repository for glac images"
@@ -30,6 +37,11 @@ resource "docker_registry_image" "app" {
 }
 
 resource "google_cloud_run_v2_service" "app" {
+  depends_on = [
+    google_project_iam_member.cloud_run_aiplatform_user,
+    docker_registry_image.app
+  ]
+
   name     = var.cloud_run_service
   location = var.region
 
@@ -69,11 +81,6 @@ resource "google_cloud_run_v2_service" "app" {
       }
     }
   }
-
-  depends_on = [
-    google_project_iam_member.cloud_run_aiplatform_user,
-    docker_registry_image.app
-  ]
 }
 
 resource "google_cloud_run_v2_service_iam_member" "public_invoker" {
