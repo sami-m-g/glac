@@ -33,3 +33,4 @@ jobs:
           gcloud infra-manager deployments apply glac-deployment \
           --location=us-central1 \
           --local-source=infra \
+          --service-account=${{ secrets.GOOGLE_SERVICE_ACCOUNT }}
