@@ -1,21 +1,4 @@
-resource "google_project_service" "artifact_registry_service" {
-  project = var.project_id
-  service = "artifactregistry.googleapis.com"
-}
-
-resource "google_project_service" "iam_service" {
-  project = var.project_id
-  service = "iam.googleapis.com"
-}
-
-resource "google_project_service" "compute_service" {
-  project = var.project_id
-  service = "compute.googleapis.com"
-}
-
 resource "google_artifact_registry_repository" "artifact_repo" {
-  depends_on = [google_project_service.artifact_registry_service]
-
   location      = var.region
   repository_id = var.artifact_registry_repo
   description   = "Docker repository for glac images"
@@ -28,8 +11,6 @@ resource "google_service_account" "cloud_run_service_account" {
 }
 
 resource "google_project_iam_member" "cloud_run_aiplatform_user" {
-  depends_on = [google_project_service.iam_service]
-
   project = var.project_id
   role    = "roles/aiplatform.user"
   member  = "serviceAccount:${google_service_account.cloud_run_service_account.email}"
@@ -39,8 +20,8 @@ resource "docker_image" "app" {
   name = local.image_uri
 
   build {
-    context    = "${path.module}/.."
-    dockerfile = "${path.module}/../Dockerfile"
+    context    = "${path.root}/.."
+    dockerfile = "${path.root}/../Dockerfile"
   }
 }
 
