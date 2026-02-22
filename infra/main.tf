@@ -20,8 +20,8 @@ resource "docker_image" "app" {
   name = local.image_uri
 
   build {
-    context    = "${path.root}/.."
-    dockerfile = "${path.root}/../Dockerfile"
+    context    = local.repo_root
+    dockerfile = "${local.repo_root}/Dockerfile"
   }
 }
 
