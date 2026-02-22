@@ -4,8 +4,12 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
+RUN python -m pip install --upgrade pip \
+    && pip install --no-cache-dir uv
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-cache
+
 COPY . .
 
-RUN pip install --no-cache-dir .
-
-CMD ["sh", "-c", "adk web --host 0.0.0.0 --port ${PORT}"]
+CMD ["sh", "-c", "uv run adk web"]
