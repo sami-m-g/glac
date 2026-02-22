@@ -11,3 +11,4 @@ steps:
       - "gcr.io/$PROJECT_ID/glac:$SHORT_SHA"
 images:
   - "gcr.io/$PROJECT_ID/glac:$SHORT_SHA"
+logging: CLOUD_LOGGING_ONLY
