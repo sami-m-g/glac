@@ -19,11 +19,14 @@ steps:
       - "deploy"
       - "glac"
       - "--image=gcr.io/$PROJECT_ID/glac:$SHORT_SHA"
-      - "--region=us-central1"
+      - "--region=${_GOOGLE_CLOUD_LOCATION}"
       - "--platform=managed"
       - "--allow-unauthenticated"
       - "--quiet"
+      - "--set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=1,GOOGLE_CLOUD_LOCATION=${_GOOGLE_CLOUD_LOCATION},PROJECT_ID=$PROJECT_ID"
 images:
   - "gcr.io/$PROJECT_ID/glac:$SHORT_SHA"
 options:
   logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _GOOGLE_CLOUD_LOCATION: "us-central1"
