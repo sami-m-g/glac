@@ -8,7 +8,7 @@ RUN python -m pip install --upgrade pip \
     && pip install --no-cache-dir uv
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-cache
+RUN uv sync --frozen --no-cache --no-install-project
 
 COPY . .
 
