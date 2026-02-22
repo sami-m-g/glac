@@ -10,9 +10,9 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    model: str
+    model: str = "gemini-2.5-flash"
 
 
 @functools.cache
 def get_settings() -> Settings:
-    return Settings()  # type: ignore[call-arg]
+    return Settings()
