@@ -12,4 +12,4 @@ RUN uv sync --frozen --no-cache --no-install-project
 
 COPY . .
 
-CMD ["sh", "-c", "uv run adk web"]
+CMD ["sh", "-c", "uv run adk web --host 0.0.0.0 --port ${PORT:-8000}"]
