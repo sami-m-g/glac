@@ -1,20 +1,5 @@
 steps:
   # ===============================
-  # Build Client (Next.js)
-  # ===============================
-  - id: "Build client image"
-    name: "gcr.io/cloud-builders/docker"
-    env:
-      - DOCKER_BUILDKIT=1
-    args:
-      - "build"
-      - "-f"
-      - "Dockerfile.client"
-      - "-t"
-      - "gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
-      - "."
-
-  # ===============================
   # Build Server (Python Agent)
   # ===============================
   - id: "Build server image"
@@ -27,6 +12,21 @@ steps:
       - "Dockerfile.server"
       - "-t"
       - "gcr.io/$PROJECT_ID/glac-server:$SHORT_SHA"
+      - "."
+
+  # ===============================
+  # Build Client (Next.js)
+  # ===============================
+  - id: "Build client image"
+    name: "gcr.io/cloud-builders/docker"
+    env:
+      - DOCKER_BUILDKIT=1
+    args:
+      - "build"
+      - "-f"
+      - "Dockerfile.client"
+      - "-t"
+      - "gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
       - "."
 
   # ===============================
@@ -46,6 +46,20 @@ steps:
       - "--quiet"
 
   # ===============================
+  # Fetch Server URL
+  # ===============================
+  - id: "Fetch server url"
+    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: /bin/sh
+    args:
+      - "-c"
+      - |
+        gcloud run services describe glac-server \
+          --region=${_GOOGLE_CLOUD_LOCATION} \
+          --platform=managed \
+          --format='value(status.url)' > /workspace/server_url.txt
+
+  # ===============================
   # Deploy Client
   # ===============================
   - id: "Deploy client to Cloud Run"
@@ -63,6 +77,7 @@ steps:
       - "--set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=1"
       - "--set-env-vars=GOOGLE_CLOUD_LOCATION=${_GOOGLE_CLOUD_LOCATION}"
       - "--set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID"
+      - "--set-env-vars=AGENT_BASE_URL=$(cat /workspace/server_url.txt)"
 
 images:
   - "gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
