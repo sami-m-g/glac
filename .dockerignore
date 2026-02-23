@@ -127,3 +127,27 @@ Desktop.ini
 *.gemini*
 *.openai*
 *.anthropic*
+
+# Python caches and environments
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.pdb
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+coverage.xml
+*.egg-info/
+*.egg
+*.whl
+.venv/
+venv/
+ENV/
+env/
+*.dist-info/

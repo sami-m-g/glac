@@ -12,10 +12,11 @@ const serviceAdapter = new ExperimentalEmptyAdapter();
  
 // 2. Create the CopilotRuntime instance and utilize the AG-UI client
 //    to setup the connection with the ADK agent.
+const agentPort = process.env.AGENT_PORT ?? "8000";
 const runtime = new CopilotRuntime({
   agents: {
     // Our FastAPI endpoint URL
-    "my_agent": new HttpAgent({url: "http://localhost:8000/"}),
+    "my_agent": new HttpAgent({url: `http://localhost:${agentPort}/`}),
   }   
 });
  
