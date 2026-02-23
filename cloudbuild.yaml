@@ -33,11 +33,11 @@ steps:
       - "-t"
       - "gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
       - "."
-  - id: "Push server image"
+  - id: "Push client image"
     name: "gcr.io/cloud-builders/docker"
     args:
       - "push"
-      - "gcr.io/$PROJECT_ID/glac-server:$SHORT_SHA"
+      - "gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
 
   # ===============================
   # Deploy Server First
