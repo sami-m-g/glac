@@ -74,20 +74,22 @@ steps:
   # ===============================
   - id: "Deploy client to Cloud Run"
     name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: gcloud
+    entrypoint: /bin/sh
     args:
-      - "run"
-      - "deploy"
-      - "glac-client"
-      - "--image=gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
-      - "--region=${_GOOGLE_CLOUD_LOCATION}"
-      - "--platform=managed"
-      - "--allow-unauthenticated"
-      - "--quiet"
-      - "--set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=1"
-      - "--set-env-vars=GOOGLE_CLOUD_LOCATION=${_GOOGLE_CLOUD_LOCATION}"
-      - "--set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID"
-      - "--set-env-vars=AGENT_BASE_URL=$(cat /workspace/server_url.txt)"
+      - "-c"
+      - |
+        AGENT_BASE_URL=$(cat /workspace/server_url.txt)
+
+        gcloud run deploy glac-client \
+          --image=gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA \
+          --region=${_GOOGLE_CLOUD_LOCATION} \
+          --platform=managed \
+          --allow-unauthenticated \
+          --quiet \
+          --set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=1 \
+          --set-env-vars=GOOGLE_CLOUD_LOCATION=${_GOOGLE_CLOUD_LOCATION} \
+          --set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID \
+          --set-env-vars=AGENT_BASE_URL=$AGENT_BASE_URL
 
 images:
   - "gcr.io/$PROJECT_ID/glac-client:$SHORT_SHA"
