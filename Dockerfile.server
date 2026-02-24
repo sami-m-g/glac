@@ -22,8 +22,8 @@ WORKDIR /app
 
 # Install project dependencies with frozen lockfile for reproducible builds
 RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=agent/uv.lock,target=uv.lock \
-    --mount=type=bind,source=agent/pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --locked --no-install-project
 
 # Copy application source code
