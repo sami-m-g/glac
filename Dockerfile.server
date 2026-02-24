@@ -44,7 +44,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 FROM debian:bookworm-slim AS runner
 
 # Set production environment variables
-ENV AGENT_PORT=8000
+ENV HOST=0.0.0.0
+ENV PORT=8080
 
 # Setup a non-root user
 RUN groupadd --system --gid 999 nonroot \
@@ -66,7 +67,7 @@ USER nonroot
 WORKDIR /app
 
 # Expose port 8000 to allow HTTP traffic
-EXPOSE 8000
+EXPOSE 8080
 
 # Run the python application
 CMD ["python", "-m", "agent.main"]
