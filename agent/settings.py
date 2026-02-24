@@ -1,5 +1,6 @@
 import functools
 
+from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -10,6 +11,10 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    google_genai_use_vertexai: int = 1
+    google_cloud_project: SecretStr
+    google_cloud_location: str = "us-central1"
+
     port: int = 8000
     host: str = "127.0.0.1"
 
@@ -19,4 +24,4 @@ class Settings(BaseSettings):
 @functools.cache
 def get_settings() -> Settings:
     """Get the application settings."""
-    return Settings()
+    return Settings()  # type: ignore[call-arg]

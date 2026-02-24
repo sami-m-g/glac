@@ -40,7 +40,7 @@ build-backend = "hatchling.build"
 path = "agent/__init__.py"
 
 [project.scripts]
-app = "agent.main:main"
+agent = "agent.main:main"
 
 [tool.ruff]
 line-length = 88

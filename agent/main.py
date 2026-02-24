@@ -190,8 +190,13 @@ app = FastAPI(title="ADK Middleware Proverbs Agent")
 # Add the ADK endpoint
 add_adk_fastapi_endpoint(app, adk_proverbs_agent, path="/")
 
-if __name__ == "__main__":
+
+def main():
     import uvicorn
 
     settings = get_settings()
     uvicorn.run(app, host=settings.host, port=settings.port)
+
+
+if __name__ == "__main__":
+    main()
