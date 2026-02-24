@@ -54,9 +54,9 @@ steps:
       - "--platform=managed"
       - "--allow-unauthenticated"
       - "--quiet"
-      - "set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=1"
-      - "set-env-vars=GOOGLE_CLOUD_LOCATION=${_GOOGLE_CLOUD_LOCATION}"
-      - "set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID"
+      - "--set-env-vars=GOOGLE_GENAI_USE_VERTEXAI=1"
+      - "--set-env-vars=GOOGLE_CLOUD_LOCATION=${_GOOGLE_CLOUD_LOCATION}"
+      - "--set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID"
 
   # ===============================
   # Fetch Server URL
