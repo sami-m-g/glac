@@ -16,10 +16,10 @@ export const generateVideoTool = new FunctionTool({
     prompt: z.string().min(1),
     seed: z.number().int(),
 
-    durationSeconds: z.number().int().min(1).max(120).default(8),
-    aspectRatio: z.string().optional().default("19:6"),
+    durationSeconds: z.number().int().min(2).max(8).default(8),
+    aspectRatio: z.string().optional().default("16:9"),
     enhancePrompt: z.boolean().optional().default(true),
-    generateAudio: z.boolean().optional(),
+    generateAudio: z.boolean().optional().default(true),
   }),
   execute: async (input, toolContext) => {
     const ai = createGenAIClient();
